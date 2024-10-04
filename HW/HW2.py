@@ -21,10 +21,33 @@ def plot_surface(f, points):
     fig = plt.figure()
     fig.suptitle('f(x_1, x_2) = (x_1^3)/3 - 4x_1 + (x_2^3)/3 - 16x_2')
     ax = fig.add_subplot(111, projection='3d')
+    # Put names on axis:
+    ax.set_xlabel('x_1')
+    ax.set_ylabel('x_2')
     for point in points:
         ax.scatter(point[0], point[1], f(point[0], point[1]), 
                    color='r', s=50, edgecolor='k', linewidth=1.5) 
-    ax.plot_surface(X_1, X_2, Y, cmap='viridis')
+    ax.plot_surface(X_1, X_2, Y)
+    plt.show()
+
+def plot_wireframe(f, points):
+    x1_vals = np.linspace(-10, 10, 100)
+    x2_vals = np.linspace(-10, 10, 100)
+    X_1, X_2 = np.meshgrid(x1_vals, x2_vals)
+    Y = f(X_1, X_2)
+    fig = plt.figure()
+    fig.suptitle('f(x_1, x_2) = (x_1^3)/3 - 4x_1 + (x_2^3)/3 - 16x_2')
+    ax = fig.add_subplot(111, projection='3d')
+    for point in points:
+        ax.scatter(point[0], point[1], f(point[0], point[1]), 
+                    color='r', s=50, edgecolor='k', linewidth=1.5)
+        print(f'({point[0]}, {point[1]})')
+    ax.plot_wireframe(X_1, X_2, Y, cmap='viridis')
     plt.show()
 
 plot_surface(f, stationary_points(f))
+
+
+# Exercise 4
+def chebyshev_upper_bound(X, mean, std_dev):
+    return np.max(np.abs(X - mean)/std_dev)
